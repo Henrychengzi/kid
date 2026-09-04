@@ -7,6 +7,7 @@ const routes = [
   { path: '/hanzi', name: 'hanzi', component: () => import('@/views/HanziHomeView.vue') },
   { path: '/hanzi/learn/:levelId', name: 'hanzi-learn', component: () => import('@/views/HanziLearnView.vue') },
   { path: '/hanzi/trace/:levelId', name: 'hanzi-trace', component: () => import('@/views/TraceView.vue') },
+  { path: '/hanzi/dictation/:levelId', name: 'hanzi-dictation', component: () => import('@/views/DictationView.vue') },
   { path: '/hanzi/game/:levelId', name: 'hanzi-game', component: () => import('@/views/GameView.vue'), props: { module: 'hanzi' } },
   { path: '/english', name: 'english', component: () => import('@/views/EnHomeView.vue') },
   { path: '/english/learn/:catId', name: 'en-learn', component: () => import('@/views/EnLearnView.vue') },

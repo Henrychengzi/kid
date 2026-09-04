@@ -199,6 +199,9 @@ onUnmounted(() => {
       <button class="btn btn--purple btn--block" type="button" @click="router.push(`/hanzi/game/${level.id}`)">
         🎮 学完啦，去闯关！
       </button>
+      <button class="btn btn--blue btn--block" type="button" @click="router.push(`/hanzi/dictation/${level.id}`)">
+        🎧 听写练习
+      </button>
       <button class="btn btn--ghost btn--block" type="button" @click="router.push(`/hanzi/trace/${level.id}`)">
         ✍️ 描红写字
       </button>

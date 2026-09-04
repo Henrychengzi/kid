@@ -12,6 +12,8 @@
     "icons": "python scripts/generate-icons.py"
   },
   "dependencies": {
+    "hanzi-writer": "^3.7.3",
+    "hanzi-writer-data": "^2.0.1",
     "pinia": "^2.3.0",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0"

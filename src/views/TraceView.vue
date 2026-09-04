@@ -1,10 +1,11 @@
 <script setup>
-import { ref, shallowRef, computed, watch, onMounted, onUnmounted } from 'vue'
+import { ref, shallowRef, computed, watch, nextTick, onMounted, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import AppHeader from '@/components/AppHeader.vue'
 import { useProgressStore } from '@/store/progress'
 import { getHanziLevel } from '@/data/hanzi'
 import { speak, stopSpeak } from '@/utils/speech'
+import HanziWriter from 'hanzi-writer'
 
 const route = useRoute()
 const router = useRouter()
@@ -36,6 +37,65 @@ const COLORS = [
 ]
 
 let ctx = null
+
+/* ── 笔顺动画（hanzi-writer，运行时从 CDN 拉取真实笔顺数据，渲染为 SVG）── */
+const showStroke = ref(false)
+const writerEl = ref(null)
+const slow = ref(false)
+const strokeState = ref('idle') // idle | loading | ready | error
+let writer = null
+
+function mountWriter() {
+  if (!writerEl.value) return
+  writerEl.value.innerHTML = ''
+  writer = HanziWriter.create(writerEl.value, current.value.char, {
+    width: 300,
+    height: 300,
+    padding: 14,
+    showOutline: true,
+    showCharacter: false,
+    strokeColor: '#e8590c',
+    radicalColor: '#1971c2',
+    delayBetweenStrokes: 220,
+    strokeAnimationSpeed: slow.value ? 0.45 : 1.2,
+    renderer: 'svg'
+  })
+}
+
+function playStroke() {
+  if (!writerEl.value) return
+  strokeState.value = 'loading'
+  try {
+    mountWriter()
+    writer
+      .animateCharacter()
+      .then(() => (strokeState.value = 'ready'))
+      .catch(() => (strokeState.value = 'error'))
+  } catch (e) {
+    strokeState.value = 'error'
+  }
+}
+
+function loopStroke() {
+  if (!writerEl.value) return
+  mountWriter()
+  strokeState.value = 'ready'
+  try {
+    writer
+      .loopCharacterAnimation({ delayBetweenLoops: 500 })
+      .catch(() => (strokeState.value = 'error'))
+  } catch (e) {
+    strokeState.value = 'error'
+  }
+}
+
+function toggleStroke() {
+  showStroke.value = !showStroke.value
+  if (showStroke.value) nextTick(playStroke)
+  else {
+    writer = null
+  }
+}
 
 /* ── 坐标换算 ── */
 function toLocal(e) {
@@ -188,6 +248,11 @@ watch(current, () => {
   strokes.value = []
   strokeCount.value = 0
   redraw()
+  if (showStroke.value) nextTick(playStroke)
+})
+
+watch(slow, () => {
+  if (showStroke.value) nextTick(playStroke)
 })
 
 function onKey(e) {
@@ -209,6 +274,7 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener('keydown', onKey)
   stopSpeak()
+  writer = null
 })
 </script>
 
@@ -244,6 +310,28 @@ onUnmounted(() => {
       <p class="pinyin">{{ current.pinyin }} · {{ current.strokes }} 画</p>
     </section>
 
+    <!-- 笔顺动画 -->
+    <section v-if="showStroke" class="stroke card anim-rise">
+      <h3 class="stroke__title">👀 看笔顺：{{ current.char }} 怎么写</h3>
+      <div ref="writerEl" class="stroke__canvas" />
+      <p v-if="strokeState === 'loading'" class="stroke__hint">正在加载笔顺动画…</p>
+      <p v-else-if="strokeState === 'error'" class="stroke__hint stroke__hint--err">
+        笔顺动画需要联网加载，请检查网络后重试 🙏
+      </p>
+      <div class="stroke__ctrls">
+        <button class="btn btn--sm btn--ghost" type="button" @click="playStroke">▶ 播放笔顺</button>
+        <button class="btn btn--sm btn--ghost" type="button" @click="loopStroke">🔁 循环播放</button>
+        <button
+          class="btn btn--sm"
+          :class="slow ? 'btn--on' : 'btn--ghost'"
+          type="button"
+          @click="slow = !slow"
+        >
+          {{ slow ? '🐢 慢动作中' : '🐇 正常速度' }}
+        </button>
+      </div>
+    </section>
+
     <!-- 工具条 -->
     <section class="tools card">
       <div class="tools__row">
@@ -267,6 +355,9 @@ onUnmounted(() => {
         <button class="btn btn--sm btn--ghost" type="button" :disabled="!hasStroke" @click="clear">🧹 擦掉</button>
         <button class="btn btn--sm btn--ghost" type="button" @click="showGhost = !showGhost">
           {{ showGhost ? '👻 藏起底稿' : '👀 显示底稿' }}
+        </button>
+        <button class="btn btn--sm btn--ghost" type="button" @click="toggleStroke">
+          {{ showStroke ? '✖ 关闭笔顺' : '🎬 看笔顺' }}
         </button>
         <button class="btn btn--sm btn--ghost" type="button" @click="play">🔊 读一读</button>
       </div>
@@ -398,6 +489,54 @@ onUnmounted(() => {
   letter-spacing: 1px;
 }
 
+/* ── 笔顺动画 ── */
+.stroke {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.stroke__title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.stroke__canvas {
+  width: 300px;
+  height: 300px;
+  max-width: 100%;
+  background: #fff;
+  border: 3px dashed #ffd0bb;
+  border-radius: 20px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.stroke__hint {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-mute);
+}
+
+.stroke__hint--err {
+  color: #e8590c;
+}
+
+.stroke__ctrls {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.stroke__ctrls .btn {
+  min-width: 92px;
+}
+
 .tools {
   margin-top: 16px;
   display: flex;
@@ -443,6 +582,12 @@ onUnmounted(() => {
 .tools__row .btn {
   flex: 1;
   min-width: 96px;
+}
+
+.btn--on {
+  background: var(--c-orange);
+  color: #fff;
+  border-color: var(--c-orange);
 }
 
 .actions {
