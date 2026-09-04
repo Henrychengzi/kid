@@ -18,27 +18,27 @@ const totalLearned = () => store.learnedCountOf('english')
       emoji="🔤"
       subtitle="按生活主题分类，边看图边记单词"
       back-to="/"
-      color="var(--c-teal)"
+      color="var(--accent-2)"
     />
 
-    <div class="summary card anim-rise">
-      <div class="summary__item">
-        <strong>{{ totalLearned() }}</strong>
-        <span>已学单词</span>
+    <section class="stats anim-rise">
+      <div class="stat stat--mint">
+        <span class="stat__num">{{ totalLearned() }}</span>
+        <span class="stat__label">已学</span>
       </div>
-      <div class="summary__item">
-        <strong>{{ store.masteredCountOf('english') }}</strong>
-        <span>已掌握</span>
+      <div class="stat stat--orange">
+        <span class="stat__num">{{ store.masteredCountOf('english') }}</span>
+        <span class="stat__label">已掌握</span>
       </div>
-      <div class="summary__item">
-        <strong>{{ store.accuracyOf('english') }}%</strong>
-        <span>正确率</span>
+      <div class="stat stat--green">
+        <span class="stat__num">{{ store.accuracyOf('english') }}%</span>
+        <span class="stat__label">正确率</span>
       </div>
-      <div class="summary__item">
-        <strong>{{ EN_ALL.length }}</strong>
-        <span>词库总量</span>
+      <div class="stat stat--blue">
+        <span class="stat__num">{{ EN_ALL.length }}</span>
+        <span class="stat__label">词库</span>
       </div>
-    </div>
+    </section>
 
     <p class="hint">建议从「动物朋友」「颜色形状」开始，宝宝最容易有成就感 👇</p>
 
@@ -63,47 +63,61 @@ const totalLearned = () => store.learnedCountOf('english')
 </template>
 
 <style scoped>
-.summary {
+.stats {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  text-align: center;
-  margin-bottom: 18px;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
 }
 
-.summary__item {
+.stat {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  background: var(--bg-card);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border: 0.5px solid var(--glass-border);
+  border-radius: var(--radius-card);
+  padding: 14px 6px;
+  box-shadow: var(--shadow-xs);
 }
 
-.summary__item strong {
-  font-size: 22px;
-  font-weight: 900;
-  color: var(--c-teal);
-}
-
-.summary__item span {
-  font-size: 12px;
-  color: var(--text-mute);
+.stat__num {
+  font-size: 24px;
   font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
 }
+
+.stat__label {
+  font-size: var(--fs-caption-1);
+  font-weight: 500;
+  color: var(--label-tertiary);
+}
+
+.stat--mint   .stat__num { color: var(--accent-2); }
+.stat--orange .stat__num { color: var(--apple-orange); }
+.stat--green  .stat__num { color: var(--success); }
+.stat--blue   .stat__num { color: var(--apple-blue); }
 
 .hint {
-  margin: 0 4px 14px;
-  font-size: 13px;
-  color: var(--text-soft);
-  font-weight: 700;
+  margin: 0 4px var(--space-4);
+  font-size: var(--fs-subhead);
+  color: var(--label-secondary);
+  font-weight: 500;
 }
 
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 14px;
+  gap: var(--space-3);
 }
 
 @media (max-width: 600px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
+  .grid { grid-template-columns: 1fr; }
+  .stat__num { font-size: 20px; }
 }
 </style>

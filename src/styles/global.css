@@ -1,44 +1,144 @@
 /* ============================================================
-   小小识字乐园 · 全局样式
-   设计基调：明亮、圆润、大字号、强反馈 —— 面向 4-10 岁儿童
+   小小识字乐园 · 全局样式（Apple Design System · Cream Soda）
+   基调：奶油糖果 / 柔和 / 圆润 / iOS 触感
    ============================================================ */
 
 :root {
-  --c-orange: #ff8a3d;
-  --c-orange-soft: #fff1e6;
-  --c-teal: #4ecdc4;
-  --c-teal-soft: #e6fbfa;
-  --c-pink: #ff6b9d;
-  --c-pink-soft: #fff0f5;
-  --c-purple: #a78bfa;
-  --c-purple-soft: #f3efff;
-  --c-green: #6ddb8b;
-  --c-green-soft: #eafaf0;
-  --c-blue: #4dabf7;
-  --c-blue-soft: #e8f4ff;
-  --c-yellow: #ffd43b;
+  /* ── Cream Soda 配色（light）── */
+  --cs-cream: #FFF6E0;        /* 主背景 */
+  --cs-pink: #FFD1DC;         /* 强调粉 */
+  --cs-mint: #B5EAD7;         /* 强调薄荷 */
+  --cs-lavender: #C7CEEA;     /* 强调薰衣草 */
 
-  --text: #2f3542;
-  --text-soft: #6b7280;
-  --text-mute: #9aa3af;
-  --card: #ffffff;
-  --line: #eceff3;
+  /* ── Apple 系统色 ─── */
+  --apple-blue: #007AFF;
+  --apple-green: #34C759;
+  --apple-orange: #FF9500;
+  --apple-pink: #FF2D55;
+  --apple-purple: #AF52DE;
+  --apple-yellow: #FFCC00;
+  --apple-teal: #5AC8FA;
+  --apple-indigo: #5856D6;
 
-  --bg-1: #fff8f0;
-  --bg-2: #eef7ff;
-  --bg-3: #f3fff9;
+  /* ── 语义色（light）── */
+  --bg-app: #FFF6E0;
+  --bg-card: rgba(255, 255, 255, 0.78);
+  --bg-card-solid: #FFFFFF;
+  --bg-secondary: rgba(255, 255, 255, 0.55);
+  --bg-tertiary: #FBF3DD;
 
-  --radius-s: 14px;
-  --radius-m: 20px;
-  --radius-l: 28px;
-  --radius-xl: 36px;
+  --label-primary: #1A1A1F;
+  --label-secondary: #6B6B72;
+  --label-tertiary: #9A9AA0;
+  --label-quaternary: #B8B8BE;
 
-  --shadow-s: 0 2px 8px rgba(47, 53, 66, 0.06);
-  --shadow-m: 0 6px 20px rgba(47, 53, 66, 0.09);
-  --shadow-l: 0 12px 32px rgba(47, 53, 66, 0.13);
+  --separator: rgba(60, 60, 67, 0.12);
+  --separator-strong: rgba(60, 60, 67, 0.20);
 
-  --font: 'PingFang SC', 'HarmonyOS Sans SC', 'Microsoft YaHei', 'Hiragino Sans GB',
-    system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --accent: #FF6B9D;            /* 主强调：粉（识字） */
+  --accent-soft: #FFE5EC;
+  --accent-2: #4ECDC4;          /* 副强调：薄荷（英语） */
+  --accent-2-soft: #DCFAF5;
+
+  --success: #34C759;
+  --warning: #FF9500;
+  --danger: #FF3B30;
+
+  /* ── Apple 圆角（连续曲线 iOS 风）── */
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
+  --radius-pill: 999px;
+
+  /* ── 4pt 间距网格 ─── */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* ── 移动端核心 token（Apple Skill）── */
+  --margin-page: 16px;
+  --gap-card: 12px;
+  --padding-card: 16px;
+  --radius-card: 20px;
+
+  /* ── 阴影（柔和、低饱和）── */
+  --shadow-xs: 0 1px 2px rgba(31, 38, 135, 0.05);
+  --shadow-sm: 0 2px 8px rgba(31, 38, 135, 0.06);
+  --shadow-md: 0 8px 24px rgba(31, 38, 135, 0.08);
+  --shadow-lg: 0 20px 48px rgba(31, 38, 135, 0.12);
+  --shadow-tinted-pink: 0 10px 30px rgba(255, 107, 157, 0.18);
+  --shadow-tinted-mint: 0 10px 30px rgba(78, 205, 196, 0.18);
+  --shadow-tinted-lavender: 0 10px 30px rgba(199, 206, 234, 0.28);
+
+  /* ── 毛玻璃（导航/Tab）── */
+  --glass-nav: rgba(255, 246, 224, 0.72);
+  --glass-tab: rgba(255, 246, 224, 0.78);
+  --glass-border: rgba(60, 60, 67, 0.10);
+
+  /* ── 字体（SF Pro 优先 → Apple 系统字体）── */
+  --font-system: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text',
+    'Helvetica Neue', 'PingFang SC', 'HarmonyOS Sans SC', 'Microsoft YaHei',
+    'Hiragino Sans GB', system-ui, 'Segoe UI', sans-serif;
+  --font-mono: 'SF Mono', ui-monospace, 'JetBrains Mono', Consolas, monospace;
+
+  /* ── iOS 字号阶梯 ─── */
+  --fs-large-title: 34px;   /* iOS Large Title */
+  --fs-title-1: 28px;
+  --fs-title-2: 22px;
+  --fs-title-3: 20px;
+  --fs-headline: 17px;      /* semibold */
+  --fs-body: 17px;
+  --fs-callout: 16px;
+  --fs-subhead: 15px;
+  --fs-footnote: 13px;
+  --fs-caption-1: 12px;
+  --fs-caption-2: 11px;
+
+  /* ── 触控目标（iOS HIG ≥44pt）── */
+  --tap-min: 44px;
+}
+
+/* ── Dark mode（深色奶油基底）── */
+html[data-theme="dark"] {
+  --bg-app: #1A1814;
+  --bg-card: rgba(40, 36, 30, 0.78);
+  --bg-card-solid: #28241E;
+  --bg-secondary: rgba(40, 36, 30, 0.55);
+  --bg-tertiary: #2D2920;
+
+  --label-primary: #F5F0E0;
+  --label-secondary: #C8C2B2;
+  --label-tertiary: #8A8478;
+  --label-quaternary: #5E5A52;
+
+  --separator: rgba(255, 246, 224, 0.10);
+  --separator-strong: rgba(255, 246, 224, 0.18);
+
+  --accent: #FF8FB5;
+  --accent-soft: rgba(255, 143, 181, 0.18);
+  --accent-2: #5DD9D2;
+  --accent-2-soft: rgba(93, 217, 210, 0.16);
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.55);
+  --shadow-tinted-pink: 0 10px 30px rgba(255, 143, 181, 0.20);
+  --shadow-tinted-mint: 0 10px 30px rgba(93, 217, 210, 0.18);
+
+  --glass-nav: rgba(26, 24, 20, 0.72);
+  --glass-tab: rgba(26, 24, 20, 0.78);
+  --glass-border: rgba(255, 246, 224, 0.10);
 }
 
 * {
@@ -49,22 +149,23 @@
 html,
 body,
 #app {
-  min-height: 100%;
+  height: 100%;
   margin: 0;
   padding: 0;
 }
 
 body {
-  font-family: var(--font);
-  color: var(--text);
-  background: linear-gradient(160deg, var(--bg-1) 0%, var(--bg-2) 45%, var(--bg-3) 100%);
-  background-attachment: fixed;
+  font-family: var(--font-system);
+  color: var(--label-primary);
+  background: var(--bg-app);
   -webkit-font-smoothing: antialiased;
-  font-size: 16px;
-  line-height: 1.6;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: var(--fs-body);
+  line-height: 1.5;
+  letter-spacing: -0.01em;
 }
 
-/* 背景装饰：缓慢漂浮的色块 */
+/* ── Cream Soda 渐变背景装饰（柔和漂浮光斑）── */
 body::before {
   content: '';
   position: fixed;
@@ -72,10 +173,18 @@ body::before {
   pointer-events: none;
   z-index: 0;
   background:
-    radial-gradient(circle at 12% 18%, rgba(255, 138, 61, 0.14) 0, transparent 22%),
-    radial-gradient(circle at 86% 12%, rgba(167, 139, 250, 0.14) 0, transparent 20%),
-    radial-gradient(circle at 78% 82%, rgba(78, 205, 196, 0.14) 0, transparent 22%),
-    radial-gradient(circle at 20% 86%, rgba(255, 107, 157, 0.12) 0, transparent 20%);
+    radial-gradient(circle at 14% 18%, rgba(255, 209, 220, 0.55) 0, transparent 26%),
+    radial-gradient(circle at 88% 14%, rgba(199, 206, 234, 0.45) 0, transparent 24%),
+    radial-gradient(circle at 76% 84%, rgba(181, 234, 215, 0.40) 0, transparent 26%),
+    radial-gradient(circle at 22% 88%, rgba(255, 246, 224, 0.65) 0, transparent 22%);
+}
+
+html[data-theme="dark"] body::before {
+  background:
+    radial-gradient(circle at 14% 18%, rgba(255, 143, 181, 0.10) 0, transparent 30%),
+    radial-gradient(circle at 88% 14%, rgba(199, 206, 234, 0.08) 0, transparent 28%),
+    radial-gradient(circle at 76% 84%, rgba(93, 217, 210, 0.10) 0, transparent 28%),
+    radial-gradient(circle at 22% 88%, rgba(255, 246, 224, 0.06) 0, transparent 24%);
 }
 
 #app {
@@ -83,241 +192,208 @@ body::before {
   z-index: 1;
 }
 
-/* 页面容器 */
+/* ── 页面容器 ─── */
 .page {
-  max-width: 880px;
+  max-width: 720px;
   margin: 0 auto;
-  padding: 20px 18px 64px;
+  padding: var(--space-5) var(--margin-page) calc(var(--space-16) + 60px);
 }
 
 .page--wide {
-  max-width: 1040px;
+  max-width: 960px;
 }
 
-/* ── 通用卡片 ── */
+/* ── 通用卡片（毛玻璃）── */
 .card {
-  background: var(--card);
-  border-radius: var(--radius-l);
-  box-shadow: var(--shadow-m);
-  padding: 22px;
+  background: var(--bg-card);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+  border-radius: var(--radius-card);
+  border: 0.5px solid var(--glass-border);
+  box-shadow: var(--shadow-sm);
+  padding: var(--padding-card);
 }
 
-/* ── 按钮 ── */
+.card--solid {
+  background: var(--bg-card-solid);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+/* ── 按钮（iOS 风格：filled / tinted / gray / plain）── */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 6px;
+  min-height: var(--tap-min);
+  padding: 0 22px;
   border: none;
   cursor: pointer;
-  font-family: var(--font);
-  font-weight: 700;
-  font-size: 17px;
-  color: #fff;
-  background: var(--c-orange);
-  border-radius: 999px;
-  padding: 14px 26px;
-  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.12);
-  transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+  font-family: var(--font-system);
+  font-weight: 600;
+  font-size: var(--fs-headline);
+  letter-spacing: -0.01em;
+  color: #FFFFFF;
+  background: var(--accent);
+  border-radius: var(--radius-pill);
+  transition: transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 180ms ease,
+    background-color 180ms ease;
   user-select: none;
 }
 
 .btn:active {
-  transform: translateY(4px);
-  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.12);
+  transform: scale(0.96);
+  opacity: 0.85;
 }
 
 .btn:disabled {
-  filter: grayscale(0.55);
-  opacity: 0.6;
+  opacity: 0.4;
   cursor: not-allowed;
 }
 
+/* Filled variants */
+.btn--mint { background: var(--accent-2); }
+.btn--blue { background: var(--apple-blue); }
+.btn--lavender { background: var(--apple-indigo); }
+.btn--orange { background: var(--apple-orange); }
+.btn--pink { background: var(--accent); }
+.btn--yellow { background: var(--apple-yellow); color: #1A1A1F; }
+
+/* Tinted / gray */
+.btn--tinted {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+.btn--tinted-mint {
+  background: var(--accent-2-soft);
+  color: var(--accent-2);
+}
+.btn--gray {
+  background: var(--bg-tertiary);
+  color: var(--label-primary);
+}
+
+/* Plain / Ghost */
+.btn--plain {
+  background: transparent;
+  color: var(--accent);
+  padding: 0 12px;
+}
 .btn--ghost {
-  background: #fff;
-  color: var(--text);
-  box-shadow: var(--shadow-s);
-  border: 2px solid var(--line);
+  background: var(--bg-card);
+  color: var(--label-primary);
+  border: 0.5px solid var(--glass-border);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
 }
 
-.btn--teal {
-  background: var(--c-teal);
-}
-.btn--purple {
-  background: var(--c-purple);
-}
-.btn--pink {
-  background: var(--c-pink);
-}
-.btn--blue {
-  background: var(--c-blue);
-}
-.btn--green {
-  background: var(--c-green);
-}
+/* Size */
+.btn--sm { min-height: 36px; font-size: var(--fs-footnote); padding: 0 14px; }
+.btn--lg { min-height: 52px; font-size: var(--fs-title-3); padding: 0 28px; }
+.btn--block { width: 100%; }
 
-.btn--sm {
-  font-size: 15px;
-  padding: 10px 18px;
-  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
-}
-
-.btn--block {
-  width: 100%;
-}
-
-.btn--lg {
-  font-size: 20px;
-  padding: 18px 34px;
-}
-
-/* ── 小标签 ── */
+/* ── Tag / Pill ─── */
 .tag {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--text-soft);
-  background: #f4f6f8;
-  border-radius: 999px;
+  font-size: var(--fs-caption-1);
+  font-weight: 600;
+  color: var(--label-secondary);
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-pill);
   padding: 4px 12px;
+  letter-spacing: -0.005em;
 }
 
-/* ── 进度条 ── */
+/* ── 进度条 ─── */
 .bar {
-  height: 12px;
-  border-radius: 999px;
-  background: #eef1f4;
+  height: 6px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-tertiary);
   overflow: hidden;
 }
 
 .bar__fill {
   height: 100%;
-  border-radius: 999px;
-  background: linear-gradient(90deg, var(--c-yellow), var(--c-orange));
-  transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  border-radius: var(--radius-pill);
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  transition: width 600ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* ── 动画 ── */
+/* ── Spring 动画 ─── */
 @keyframes pop-in {
-  0% {
-    transform: scale(0.86);
-    opacity: 0;
-  }
-  60% {
-    transform: scale(1.04);
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
+  0%   { transform: scale(0.86); opacity: 0; }
+  60%  { transform: scale(1.04); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
 }
 
 @keyframes float-y {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-8px);
-  }
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
 }
 
 @keyframes wiggle {
-  0%,
-  100% {
-    transform: rotate(0deg);
-  }
-  25% {
-    transform: rotate(-6deg);
-  }
-  75% {
-    transform: rotate(6deg);
-  }
+  0%, 100% { transform: rotate(0deg); }
+  25%      { transform: rotate(-6deg); }
+  75%      { transform: rotate(6deg); }
 }
 
 @keyframes shake-x {
-  0%,
-  100% {
-    transform: translateX(0);
-  }
-  20% {
-    transform: translateX(-9px);
-  }
-  40% {
-    transform: translateX(9px);
-  }
-  60% {
-    transform: translateX(-6px);
-  }
-  80% {
-    transform: translateX(6px);
-  }
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-9px); }
+  40% { transform: translateX(9px); }
+  60% { transform: translateX(-6px); }
+  80% { transform: translateX(6px); }
 }
 
 @keyframes rise {
-  from {
-    transform: translateY(14px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+  from { transform: translateY(14px); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
 }
 
 @keyframes spin-slow {
-  to {
-    transform: rotate(360deg);
-  }
+  to { transform: rotate(360deg); }
 }
 
-.anim-pop {
-  animation: pop-in 0.34s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-.anim-rise {
-  animation: rise 0.36s ease both;
-}
-.anim-float {
-  animation: float-y 3s ease-in-out infinite;
-}
-.anim-shake {
-  animation: shake-x 0.4s ease;
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }
 
-/* ── 页面切换过渡 ── */
+.anim-pop    { animation: pop-in 420ms cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+.anim-rise   { animation: rise 360ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+.anim-float  { animation: float-y 3s ease-in-out infinite; }
+.anim-shake  { animation: shake-x 0.4s ease; }
+
+/* 错落入场延迟工具 */
+.delay-1 { animation-delay: 60ms; }
+.delay-2 { animation-delay: 120ms; }
+.delay-3 { animation-delay: 180ms; }
+.delay-4 { animation-delay: 240ms; }
+
+/* ── 路由切换 ─── */
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition: opacity 220ms ease, transform 220ms ease;
 }
-.fade-enter-from {
-  opacity: 0;
-  transform: translateY(10px);
-}
-.fade-leave-to {
-  opacity: 0;
-  transform: translateY(-6px);
-}
+.fade-enter-from { opacity: 0; transform: translateY(8px); }
+.fade-leave-to   { opacity: 0; transform: translateY(-4px); }
 
-/* ── 响应式 ── */
+/* ── 响应式（移动优先）── */
 @media (max-width: 600px) {
   .page {
-    padding: 14px 14px 56px;
-  }
-  .card {
-    padding: 18px;
-    border-radius: var(--radius-m);
-  }
-  .btn {
-    font-size: 16px;
-    padding: 13px 22px;
+    padding: var(--space-4) var(--margin-page) calc(var(--space-12) + 80px);
   }
 }
 
-/* 尊重「减少动态效果」偏好 */
+/* 减少动效 */
 @media (prefers-reduced-motion: reduce) {
-  * {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;

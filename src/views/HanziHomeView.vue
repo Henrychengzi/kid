@@ -15,24 +15,24 @@ const totalLearned = () => store.learnedCountOf('hanzi')
   <main class="page">
     <AppHeader title="汉字王国" emoji="🇨🇳" subtitle="按年龄分级，从象形字开始" back-to="/" />
 
-    <div class="summary card anim-rise">
-      <div class="summary__item">
-        <strong>{{ totalLearned() }}</strong>
-        <span>已学汉字</span>
+    <section class="stats anim-rise">
+      <div class="stat stat--pink">
+        <span class="stat__num">{{ totalLearned() }}</span>
+        <span class="stat__label">已学</span>
       </div>
-      <div class="summary__item">
-        <strong>{{ store.masteredCountOf('hanzi') }}</strong>
-        <span>已掌握</span>
+      <div class="stat stat--orange">
+        <span class="stat__num">{{ store.masteredCountOf('hanzi') }}</span>
+        <span class="stat__label">已掌握</span>
       </div>
-      <div class="summary__item">
-        <strong>{{ store.accuracyOf('hanzi') }}%</strong>
-        <span>正确率</span>
+      <div class="stat stat--green">
+        <span class="stat__num">{{ store.accuracyOf('hanzi') }}%</span>
+        <span class="stat__label">正确率</span>
       </div>
-      <div class="summary__item">
-        <strong>{{ HANZI_ALL.length }}</strong>
-        <span>字库总量</span>
+      <div class="stat stat--blue">
+        <span class="stat__num">{{ HANZI_ALL.length }}</span>
+        <span class="stat__label">字库</span>
       </div>
-    </div>
+    </section>
 
     <p class="hint">选择适合宝宝年龄的一级，一次学 5-10 个字效果最好 👇</p>
 
@@ -56,50 +56,61 @@ const totalLearned = () => store.learnedCountOf('hanzi')
 </template>
 
 <style scoped>
-.summary {
+.stats {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  text-align: center;
-  margin-bottom: 18px;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
 }
 
-.summary__item {
+.stat {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  background: var(--bg-card);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border: 0.5px solid var(--glass-border);
+  border-radius: var(--radius-card);
+  padding: 14px 6px;
+  box-shadow: var(--shadow-xs);
 }
 
-.summary__item strong {
-  font-size: 22px;
-  font-weight: 900;
-  color: var(--c-orange);
-}
-
-.summary__item span {
-  font-size: 12px;
-  color: var(--text-mute);
+.stat__num {
+  font-size: 24px;
   font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
 }
+
+.stat__label {
+  font-size: var(--fs-caption-1);
+  font-weight: 500;
+  color: var(--label-tertiary);
+}
+
+.stat--pink   .stat__num { color: var(--accent); }
+.stat--orange .stat__num { color: var(--apple-orange); }
+.stat--green  .stat__num { color: var(--success); }
+.stat--blue   .stat__num { color: var(--apple-blue); }
 
 .hint {
-  margin: 0 4px 14px;
-  font-size: 13px;
-  color: var(--text-soft);
-  font-weight: 700;
+  margin: 0 4px var(--space-4);
+  font-size: var(--fs-subhead);
+  color: var(--label-secondary);
+  font-weight: 500;
 }
 
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 14px;
+  gap: var(--space-3);
 }
 
 @media (max-width: 600px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
-  .summary__item strong {
-    font-size: 19px;
-  }
+  .grid { grid-template-columns: 1fr; }
+  .stat__num { font-size: 20px; }
 }
 </style>

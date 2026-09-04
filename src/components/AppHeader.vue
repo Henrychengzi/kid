@@ -6,7 +6,7 @@ const props = defineProps({
   subtitle: { type: String, default: '' },
   emoji: { type: String, default: '' },
   backTo: { type: [String, Object], default: null },
-  color: { type: String, default: 'var(--c-orange)' }
+  color: { type: String, default: '' }
 })
 
 const router = useRouter()
@@ -20,15 +20,21 @@ function goBack() {
 
 <template>
   <header class="hd">
-    <button class="hd__back" type="button" aria-label="返回" @click="goBack">‹</button>
+    <button class="hd__back" type="button" aria-label="返回" @click="goBack">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden>
+        <polyline points="15 18 9 12 15 6"/>
+      </svg>
+    </button>
     <div class="hd__title">
       <div class="hd__main">
-        <span v-if="emoji" class="hd__emoji">{{ emoji }}</span>
-        <span class="hd__text" :style="{ color }">{{ title }}</span>
+        <span v-if="emoji" class="hd__emoji" aria-hidden>{{ emoji }}</span>
+        <span class="hd__text" :style="{ color: color || undefined }">{{ title }}</span>
       </div>
       <span v-if="subtitle" class="hd__sub">{{ subtitle }}</span>
     </div>
-    <slot name="right" />
+    <div class="hd__right">
+      <slot name="right" />
+    </div>
   </header>
 </template>
 
@@ -41,31 +47,42 @@ function goBack() {
   position: sticky;
   top: 0;
   z-index: 20;
-  background: linear-gradient(180deg, rgba(255, 248, 240, 0.96) 60%, rgba(255, 248, 240, 0));
-  backdrop-filter: blur(6px);
+  background: var(--glass-nav);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 0.5px solid transparent;
 }
 
 .hd__back {
   flex: none;
-  width: 44px;
-  height: 44px;
+  width: var(--tap-min);
+  height: var(--tap-min);
   border: none;
-  border-radius: 50%;
-  background: #fff;
-  color: var(--text);
-  font-size: 32px;
-  line-height: 1;
-  padding: 0 0 4px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-card);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border: 0.5px solid var(--glass-border);
+  color: var(--accent);
   cursor: pointer;
-  box-shadow: var(--shadow-s);
-  transition: transform 0.12s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1), background-color 160ms ease;
+}
+
+.hd__back svg {
+  width: 20px;
+  height: 20px;
 }
 
 .hd__back:active {
   transform: scale(0.9);
+  background: var(--accent-soft);
 }
 
 .hd__title {
+  flex: 1;
   display: flex;
   flex-direction: column;
   min-width: 0;
@@ -74,7 +91,7 @@ function goBack() {
 .hd__main {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   min-width: 0;
 }
 
@@ -84,20 +101,33 @@ function goBack() {
 }
 
 .hd__text {
-  font-size: 22px;
-  font-weight: 900;
-  letter-spacing: 1px;
+  font-size: var(--fs-large-title);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--label-primary);
+  line-height: 1.15;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .hd__sub {
-  font-size: 13px;
-  color: var(--text-mute);
-  font-weight: 600;
+  margin-top: 2px;
+  font-size: var(--fs-subhead);
+  font-weight: 500;
+  color: var(--label-tertiary);
+  letter-spacing: -0.005em;
+}
+
+.hd__right {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
 @media (max-width: 600px) {
   .hd__text {
-    font-size: 19px;
+    font-size: var(--fs-title-1);
   }
 }
 </style>
