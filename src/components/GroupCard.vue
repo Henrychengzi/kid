@@ -63,6 +63,13 @@ const percent = computed(() => (props.total ? Math.round((props.learned / props.
   box-shadow: var(--shadow-md);
 }
 
+@media (hover: hover) {
+  .grp:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+}
+
 .grp__head {
   display: flex;
   gap: 12px;
@@ -87,12 +94,13 @@ const percent = computed(() => (props.total ? Math.round((props.learned / props.
   margin: 0 0 2px;
   font-size: var(--fs-title-3);
   font-weight: 700;
-  letter-spacing: -0.015em;
+  letter-spacing: var(--tracking-tight);
   display: flex;
   align-items: center;
   gap: 8px;
   flex-wrap: wrap;
   color: var(--label-primary);
+  line-height: var(--lh-heading);
 }
 
 .grp__age {

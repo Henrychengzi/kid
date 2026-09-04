@@ -81,6 +81,12 @@ function goBack() {
   background: var(--accent-soft);
 }
 
+@media (hover: hover) {
+  .hd__back:hover {
+    background: var(--accent-soft);
+  }
+}
+
 .hd__title {
   flex: 1;
   display: flex;
@@ -103,9 +109,9 @@ function goBack() {
 .hd__text {
   font-size: var(--fs-large-title);
   font-weight: 700;
-  letter-spacing: -0.02em;
+  letter-spacing: var(--tracking-tight);
   color: var(--label-primary);
-  line-height: 1.15;
+  line-height: var(--lh-tight);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -116,7 +122,7 @@ function goBack() {
   font-size: var(--fs-subhead);
   font-weight: 500;
   color: var(--label-tertiary);
-  letter-spacing: -0.005em;
+  letter-spacing: var(--tracking-normal);
 }
 
 .hd__right {

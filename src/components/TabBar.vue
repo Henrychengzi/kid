@@ -99,9 +99,9 @@ function go(t) {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2px;
+  gap: 3px;
   min-height: var(--tap-min);
-  padding: 6px 4px;
+  padding: 4px 4px 6px;
   border: none;
   background: transparent;
   cursor: pointer;
@@ -123,9 +123,11 @@ function go(t) {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 26px;
-  height: 26px;
+  width: 40px;
+  height: 30px;
+  border-radius: var(--radius-pill);
   font-size: 0;
+  transition: background-color 200ms ease;
 }
 
 .tab__icon svg {
@@ -133,10 +135,23 @@ function go(t) {
   height: 24px;
 }
 
+.tab--active .tab__icon {
+  background: var(--accent-soft);
+}
+
 .tab__label {
   font-size: 10px;
   font-weight: 600;
-  letter-spacing: 0.01em;
+  letter-spacing: var(--tracking-wide);
+}
+
+@media (hover: hover) {
+  .tab:hover {
+    color: var(--label-secondary);
+  }
+  .tab--active:hover {
+    color: var(--accent);
+  }
 }
 
 @media (min-width: 720px) {

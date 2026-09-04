@@ -56,46 +56,6 @@ const totalLearned = () => store.learnedCountOf('hanzi')
 </template>
 
 <style scoped>
-.stats {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--space-3);
-  margin-bottom: var(--space-5);
-}
-
-.stat {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  background: var(--bg-card);
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
-  border: 0.5px solid var(--glass-border);
-  border-radius: var(--radius-card);
-  padding: 14px 6px;
-  box-shadow: var(--shadow-xs);
-}
-
-.stat__num {
-  font-size: 24px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1;
-}
-
-.stat__label {
-  font-size: var(--fs-caption-1);
-  font-weight: 500;
-  color: var(--label-tertiary);
-}
-
-.stat--pink   .stat__num { color: var(--accent); }
-.stat--orange .stat__num { color: var(--apple-orange); }
-.stat--green  .stat__num { color: var(--success); }
-.stat--blue   .stat__num { color: var(--apple-blue); }
-
 .hint {
   margin: 0 4px var(--space-4);
   font-size: var(--fs-subhead);
@@ -111,6 +71,5 @@ const totalLearned = () => store.learnedCountOf('hanzi')
 
 @media (max-width: 600px) {
   .grid { grid-template-columns: 1fr; }
-  .stat__num { font-size: 20px; }
 }
 </style>

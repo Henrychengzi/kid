@@ -51,7 +51,7 @@ const tips = [
   '每天认识 5 个字，一个月就能读小故事啦！',
   '大声跟着读出来，记得更牢哦～',
   '遇到不会的字，点一点喇叭听发音。',
-  '闯关答对 3 次，这个字就变"已掌握"啦！'
+  '闯关答对 3 次，这个字就变「已掌握」啦！'
 ]
 const tip = tips[new Date().getDate() % tips.length]
 </script>
@@ -105,7 +105,11 @@ const tip = tips[new Date().getDate() % tips.length]
             <h2 class="mod__title">汉字王国</h2>
             <p class="mod__sub">{{ hanziLearned }} / {{ HANZI_ALL.length }} 字 · 含拼音 / 部首 / 组词</p>
           </div>
-          <span class="mod__chevron">›</span>
+          <span class="mod__chevron">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden>
+              <polyline points="9 6 15 12 9 18"/>
+            </svg>
+          </span>
         </div>
         <div class="mod__progress">
           <div class="bar"><div class="bar__fill" :style="{ width: hanziPercent + '%' }" /></div>
@@ -120,7 +124,11 @@ const tip = tips[new Date().getDate() % tips.length]
             <h2 class="mod__title">英语乐园</h2>
             <p class="mod__sub">{{ enLearned }} / {{ EN_ALL.length }} 词 · 含音标 / 真人口语发音</p>
           </div>
-          <span class="mod__chevron">›</span>
+          <span class="mod__chevron">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden>
+              <polyline points="9 6 15 12 9 18"/>
+            </svg>
+          </span>
         </div>
         <div class="mod__progress">
           <div class="bar"><div class="bar__fill bar__fill--mint" :style="{ width: enPercent + '%' }" /></div>
@@ -145,9 +153,13 @@ const tip = tips[new Date().getDate() % tips.length]
         </span>
         <span class="review__body">
           <b>错题复习</b>
-          <i>还有 {{ wrongTotal }} 个{{ wrongTotal > 1 ? '内容' : '内容' }}等着攻克</i>
+          <i>还有 {{ wrongTotal }} 项等着攻克</i>
         </span>
-        <span class="review__go">›</span>
+        <span class="review__go">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden>
+            <polyline points="9 6 15 12 9 18"/>
+          </svg>
+        </span>
       </button>
     </transition>
 
@@ -166,44 +178,44 @@ const tip = tips[new Date().getDate() % tips.length]
 
 <style scoped>
 .hero {
-  margin-bottom: 22px;
+  margin-bottom: var(--space-6);
 }
 
 .hero__row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: var(--space-3);
 }
 
 .hero__title {
   margin: 0;
   font-size: var(--fs-large-title);
   font-weight: 800;
-  letter-spacing: -0.025em;
-  background: linear-gradient(120deg, #FF6B9D 0%, #C7CEEA 50%, #B5EAD7 100%);
+  letter-spacing: var(--tracking-tight);
+  background: linear-gradient(120deg, #FF6B9D 0%, #FF9500 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  line-height: 1.1;
+  line-height: var(--lh-tight);
 }
 
 html[data-theme="dark"] .hero__title {
-  background: linear-gradient(120deg, #FF8FB5 0%, #C7CEEA 50%, #8DE0C0 100%);
+  background: linear-gradient(120deg, #FF8FB5 0%, #FFB366 100%);
   -webkit-background-clip: text;
   background-clip: text;
 }
 
 .hero__hi {
-  margin: 8px 0 0;
+  margin: var(--space-2) 0 0;
   font-size: var(--fs-headline);
   font-weight: 600;
   color: var(--accent);
-  letter-spacing: -0.01em;
+  letter-spacing: var(--tracking-normal);
 }
 
 .hero__sub {
-  margin: 4px 0 0;
+  margin: var(--space-1) 0 0;
   font-size: var(--fs-footnote);
   color: var(--label-tertiary);
 }
@@ -229,47 +241,6 @@ html[data-theme="dark"] .hero__title {
 .theme-toggle svg { width: 20px; height: 20px; }
 
 .theme-toggle:active { transform: scale(0.9); color: var(--accent); }
-
-/* ── Stats 4 格 ─── */
-.stats {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--space-3);
-  margin-bottom: var(--space-5);
-}
-
-.stat {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  background: var(--bg-card);
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
-  border: 0.5px solid var(--glass-border);
-  border-radius: var(--radius-card);
-  padding: 14px 6px;
-  box-shadow: var(--shadow-xs);
-}
-
-.stat__num {
-  font-size: 24px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1;
-}
-
-.stat__label {
-  font-size: var(--fs-caption-1);
-  font-weight: 500;
-  color: var(--label-tertiary);
-}
-
-.stat--orange .stat__num { color: var(--apple-orange); }
-.stat--blue   .stat__num { color: var(--apple-blue); }
-.stat--green  .stat__num { color: var(--success); }
-.stat--pink   .stat__num { color: var(--accent); }
 
 /* ── Modules ─── */
 .modules {
@@ -302,11 +273,18 @@ html[data-theme="dark"] .hero__title {
   box-shadow: var(--shadow-sm);
 }
 
+@media (hover: hover) {
+  .mod:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+}
+
 .mod__face {
   display: flex;
   align-items: center;
-  gap: 14px;
-  margin-bottom: 14px;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
 }
 
 .mod__icon {
@@ -319,7 +297,7 @@ html[data-theme="dark"] .hero__title {
   justify-content: center;
   font-size: 22px;
   font-weight: 700;
-  letter-spacing: -0.02em;
+  letter-spacing: var(--tracking-tight);
 }
 
 .mod__icon--hanzi {
@@ -332,15 +310,16 @@ html[data-theme="dark"] .hero__title {
 }
 
 html[data-theme="dark"] .mod__icon--hanzi { color: #FF8FB5; }
-html[data-theme="dark"] .mod__icon--en    { color: #5DD9D2; }
+html[data-theme="dark"] .mod__icon--en    { color: #4FD6CD; }
 
 .mod__body { flex: 1; min-width: 0; }
 .mod__title {
   margin: 0;
   font-size: var(--fs-title-2);
   font-weight: 700;
-  letter-spacing: -0.015em;
+  letter-spacing: var(--tracking-tight);
   color: var(--label-primary);
+  line-height: var(--lh-heading);
 }
 .mod__sub {
   margin: 3px 0 0;
@@ -350,21 +329,23 @@ html[data-theme="dark"] .mod__icon--en    { color: #5DD9D2; }
 }
 
 .mod__chevron {
-  font-size: 26px;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
   color: var(--label-quaternary);
-  line-height: 1;
 }
+.mod__chevron svg { width: 20px; height: 20px; }
 
 .mod__progress {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: var(--space-3);
 }
 
 .mod__progress .bar { flex: 1; }
 
 .bar__fill--mint {
-  background: linear-gradient(90deg, #5DD9D2, #4ECDC4);
+  background: linear-gradient(90deg, #4FD6CD, #2EB8AE);
 }
 
 .mod__num {
@@ -378,7 +359,7 @@ html[data-theme="dark"] .mod__icon--en    { color: #5DD9D2; }
 .review {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: var(--space-3);
   width: 100%;
   margin-bottom: var(--space-5);
   border: 0.5px solid var(--glass-border);
@@ -388,10 +369,14 @@ html[data-theme="dark"] .mod__icon--en    { color: #5DD9D2; }
   cursor: pointer;
   text-align: left;
   font-family: var(--font-system);
-  transition: transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 220ms ease;
 }
 
 .review:active { transform: scale(0.98); }
+
+@media (hover: hover) {
+  .review:hover { transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+}
 
 .review__badge {
   flex: none;
@@ -418,7 +403,7 @@ html[data-theme="dark"] .mod__icon--en    { color: #5DD9D2; }
   font-size: var(--fs-headline);
   font-weight: 700;
   color: var(--accent);
-  letter-spacing: -0.01em;
+  letter-spacing: var(--tracking-normal);
 }
 
 .review__body i {
@@ -430,17 +415,19 @@ html[data-theme="dark"] .mod__icon--en    { color: #5DD9D2; }
 }
 
 .review__go {
-  font-size: 24px;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
   color: var(--accent);
   opacity: 0.6;
-  line-height: 1;
 }
+.review__go svg { width: 20px; height: 20px; }
 
 /* ── Tip ─── */
 .tip {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: var(--space-3);
   background: var(--bg-card);
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
@@ -466,7 +453,7 @@ html[data-theme="dark"] .mod__icon--en    { color: #5DD9D2; }
   font-size: var(--fs-subhead);
   color: var(--label-secondary);
   font-weight: 500;
-  line-height: 1.5;
+  line-height: var(--lh-body);
 }
 
 /* ── Warn ─── */
@@ -478,7 +465,6 @@ html[data-theme="dark"] .mod__icon--en    { color: #5DD9D2; }
 }
 
 @media (max-width: 600px) {
-  .stat__num { font-size: 20px; }
   .mod__title { font-size: var(--fs-title-3); }
   .hero__title { font-size: var(--fs-title-1); }
 }
