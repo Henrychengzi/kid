@@ -21,6 +21,10 @@ const todayAccuracy = computed(() => {
   return total ? Math.round((t.correct / total) * 100) : 0
 })
 
+const wrongHanzi = computed(() => store.wrongListOf('hanzi').length)
+const wrongEn = computed(() => store.wrongListOf('english').length)
+const wrongTotal = computed(() => wrongHanzi.value + wrongEn.value)
+
 const greeting = computed(() => {
   const h = new Date().getHours()
   const name = store.settings.kidName ? `，${store.settings.kidName}` : ''
@@ -105,6 +109,23 @@ const tip = tips[new Date().getDate() % tips.length]
         </div>
       </button>
     </section>
+
+    <!-- 错题复习：有错题才出现 -->
+    <transition name="fade">
+      <button
+        v-if="wrongTotal > 0"
+        class="review anim-rise"
+        type="button"
+        @click="router.push(wrongHanzi >= wrongEn ? '/review/hanzi' : '/review/english')"
+      >
+        <span class="review__emoji">📕</span>
+        <span class="review__body">
+          <b>错题复习</b>
+          <i>错字本里还有 {{ wrongTotal }} 个{{ wrongTotal > 1 ? '内容' : '内容' }}等着攻克</i>
+        </span>
+        <span class="review__go">›</span>
+      </button>
+    </transition>
 
     <!-- 小贴士 -->
     <section class="tip anim-rise">
@@ -253,6 +274,58 @@ const tip = tips[new Date().getDate() % tips.length]
 .mod__arrow {
   font-size: 28px;
   color: var(--text-mute);
+  line-height: 1;
+}
+
+.review {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  margin-top: 14px;
+  border: 2px solid #ffc9d7;
+  background: #fff5f8;
+  border-radius: var(--radius-m);
+  padding: 14px 18px;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--font);
+  transition: transform 0.14s ease, box-shadow 0.14s ease;
+}
+
+.review:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-m);
+}
+
+.review__emoji {
+  font-size: 30px;
+  line-height: 1;
+}
+
+.review__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.review__body b {
+  font-size: 16px;
+  font-weight: 900;
+  color: #c2255c;
+}
+
+.review__body i {
+  font-style: normal;
+  font-size: 12.5px;
+  color: var(--text-mute);
+  font-weight: 600;
+}
+
+.review__go {
+  font-size: 26px;
+  color: #ffb3c6;
   line-height: 1;
 }
 

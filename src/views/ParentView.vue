@@ -207,7 +207,9 @@ function resetAll() {
     <!-- ═══ 错字本 ═══ -->
     <section v-else-if="tab === 'wrong'" class="anim-rise">
       <div class="card wrong">
-        <h3 class="wrong__title">🇨🇳 汉字易错字 <span>{{ hanziWrong.length }}</span></h3>
+        <h3 class="wrong__title">
+          🇨🇳 汉字易错字 <span>{{ hanziWrong.length }}</span>
+        </h3>
         <div v-if="hanziWrong.length" class="wrong__grid">
           <div v-for="w in hanziWrong" :key="w.id" class="wcard">
             <b class="wcard__c">{{ w.char }}</b>
@@ -216,10 +218,20 @@ function resetAll() {
           </div>
         </div>
         <p v-else class="empty">还没有出错的汉字，太棒了！🎉</p>
+        <button
+          v-if="hanziWrong.length"
+          class="btn btn--sm btn--pink wrong__cta"
+          type="button"
+          @click="router.push('/review/hanzi')"
+        >
+          💪 练习这 {{ Math.min(hanziWrong.length, 10) }} 个字
+        </button>
       </div>
 
       <div class="card wrong" style="margin-top: 14px">
-        <h3 class="wrong__title">🔤 英语易错词 <span>{{ enWrong.length }}</span></h3>
+        <h3 class="wrong__title">
+          🔤 英语易错词 <span>{{ enWrong.length }}</span>
+        </h3>
         <div v-if="enWrong.length" class="wrong__grid">
           <div v-for="w in enWrong" :key="w.id" class="wcard">
             <b class="wcard__c wcard__c--en">{{ w.word }}</b>
@@ -228,7 +240,19 @@ function resetAll() {
           </div>
         </div>
         <p v-else class="empty">还没有出错的单词，继续保持！🎉</p>
+        <button
+          v-if="enWrong.length"
+          class="btn btn--sm btn--pink wrong__cta"
+          type="button"
+          @click="router.push('/review/english')"
+        >
+          💪 练习这 {{ Math.min(enWrong.length, 10) }} 个词
+        </button>
       </div>
+
+      <p class="wrong__note">
+        答对 3 次会自动标记为「已掌握」，并从错字本里移出。
+      </p>
     </section>
 
     <!-- ═══ 分级进度 ═══ -->
@@ -581,6 +605,19 @@ function resetAll() {
   font-weight: 700;
   text-align: center;
   padding: 14px 0;
+}
+
+.wrong__cta {
+  width: 100%;
+  margin-top: 14px;
+}
+
+.wrong__note {
+  margin: 12px 4px 0;
+  font-size: 12.5px;
+  color: var(--text-mute);
+  font-weight: 600;
+  text-align: center;
 }
 
 .field {

@@ -17,11 +17,26 @@ const store = useProgressStore()
 
 const isHanzi = computed(() => props.module === 'hanzi')
 const scopeId = computed(() => route.params.levelId || route.params.catId)
-const scope = computed(() =>
-  isHanzi.value ? getHanziLevel(scopeId.value) : getEnCategory(scopeId.value)
-)
-const pool = computed(() => scope.value.items)
-const homePath = computed(() => (isHanzi.value ? '/hanzi' : '/english'))
+
+/** 错题复习模式：题目只从错字本里出 */
+const isReview = computed(() => route.name === 'review')
+
+const REVIEW_SCOPE = { name: '错题复习', emoji: '📕', color: '#FF6B9D', age: '攻克易错点' }
+
+const scope = computed(() => {
+  if (isReview.value) return REVIEW_SCOPE
+  return isHanzi.value ? getHanziLevel(scopeId.value) : getEnCategory(scopeId.value)
+})
+
+const pool = computed(() => {
+  if (isReview.value) return store.wrongListOf(props.module)
+  return scope.value.items
+})
+
+const homePath = computed(() => {
+  if (isReview.value) return '/parent'
+  return isHanzi.value ? '/hanzi' : '/english'
+})
 
 const QUESTION_COUNT = 10
 
@@ -154,6 +169,7 @@ function setupSpell() {
 }
 
 function startGame(m) {
+  if (!pool.value.length) return // 错字本为空时兜底，避免出空题
   mode.value = m
   questions.value = buildQuestions(m)
   qIndex.value = 0
@@ -268,38 +284,57 @@ onUnmounted(() => {
 <template>
   <main class="page">
     <AppHeader
-      :title="scope.name"
-      :emoji="'🎮'"
-      :subtitle="stage === 'playing' ? `第 ${qIndex + 1} / ${total} 题` : '闯关模式'"
+      :title="isReview ? (isHanzi ? '汉字错题复习' : '英语错题复习') : scope.name"
+      :emoji="isReview ? '📕' : '🎮'"
+      :subtitle="
+        stage === 'playing'
+          ? `第 ${qIndex + 1} / ${total} 题`
+          : isReview
+            ? '只练错过的，逐个攻克'
+            : '闯关模式'
+      "
       :back-to="homePath"
-      color="var(--c-purple)"
+      :color="isReview ? 'var(--c-pink)' : 'var(--c-purple)'"
     />
 
     <!-- ═══ 选择玩法 ═══ -->
     <section v-if="stage === 'ready'" class="ready">
-      <div class="ready__hero anim-pop">
-        <span class="ready__emoji">🏅</span>
-        <h2>准备好了吗？</h2>
-        <p>每关 {{ QUESTION_COUNT }} 道题，答对 3 次的{{ isHanzi ? '字' : '词' }}会自动标记为「已掌握」</p>
+      <!-- 错字本为空 -->
+      <div v-if="!pool.length" class="empty card anim-pop">
+        <span class="empty__emoji">🎉</span>
+        <h2>错字本是空的！</h2>
+        <p>目前没有需要复习的{{ isHanzi ? '汉字' : '单词' }}，保持得很好～</p>
+        <button class="btn" type="button" @click="router.push(homePath)">📚 继续学习</button>
       </div>
 
-      <div class="modes">
-        <button
-          v-for="(m, i) in MODES"
-          :key="m.id"
-          class="mode anim-rise"
-          :style="{ animationDelay: i * 60 + 'ms' }"
-          type="button"
-          @click="startGame(m.id)"
-        >
-          <span class="mode__emoji">{{ m.emoji }}</span>
-          <span class="mode__body">
-            <b>{{ m.name }}</b>
-            <i>{{ m.desc }}</i>
-          </span>
-          <span class="mode__go">›</span>
-        </button>
-      </div>
+      <template v-else>
+        <div class="ready__hero anim-pop">
+          <span class="ready__emoji">{{ isReview ? '💪' : '🏅' }}</span>
+          <h2>{{ isReview ? '攻克错题！' : '准备好了吗？' }}</h2>
+          <p v-if="isReview">
+            从错字本里抽 {{ Math.min(QUESTION_COUNT, pool.length) }} 道题，答对就能移出错字本
+          </p>
+          <p v-else>每关 {{ QUESTION_COUNT }} 道题，答对 3 次的{{ isHanzi ? '字' : '词' }}会自动标记为「已掌握」</p>
+        </div>
+
+        <div class="modes">
+          <button
+            v-for="(m, i) in MODES"
+            :key="m.id"
+            class="mode anim-rise"
+            :style="{ animationDelay: i * 60 + 'ms' }"
+            type="button"
+            @click="startGame(m.id)"
+          >
+            <span class="mode__emoji">{{ m.emoji }}</span>
+            <span class="mode__body">
+              <b>{{ m.name }}</b>
+              <i>{{ m.desc }}</i>
+            </span>
+            <span class="mode__go">›</span>
+          </button>
+        </div>
+      </template>
     </section>
 
     <!-- ═══ 答题中 ═══ -->
@@ -476,6 +511,30 @@ onUnmounted(() => {
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+
+.empty {
+  text-align: center;
+  padding: 34px 22px;
+}
+
+.empty__emoji {
+  font-size: 52px;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.empty h2 {
+  margin: 0 0 6px;
+  font-size: 21px;
+  font-weight: 900;
+}
+
+.empty p {
+  margin: 0 0 18px;
+  font-size: 14px;
+  color: var(--text-mute);
+  font-weight: 600;
 }
 
 .mode {
