@@ -1,0 +1,22 @@
+{
+  "name": "kid-literacy",
+  "version": "1.0.0",
+  "private": true,
+  "description": "小小识字乐园 - 面向 4-10 岁儿童的双语（汉字 / 英语）识字学习应用",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "node scripts/check-data.mjs"
+  },
+  "dependencies": {
+    "pinia": "^2.3.0",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.1",
+    "vite": "^6.0.7"
+  }
+}
